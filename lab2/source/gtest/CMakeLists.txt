@@ -20,10 +20,13 @@ set(TEST_NAME lab2_test)
 set(SOURCE_DIR ../)
 set(TEST_FILES
         add_to_avl_tree_test.cpp
+        del_from_avl_tree_test.cpp
+        utility.cpp
 )
 set(TEST_SOURCE_FILES
-        ${SOURCE_DIR}/avl_tree.c
+        ${SOURCE_DIR}/add_avl_tree.c
         ${SOURCE_DIR}/rotate.c
+        ${SOURCE_DIR}/del_avl_tree.c
 )
 
 add_executable(

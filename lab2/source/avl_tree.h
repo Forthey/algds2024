@@ -13,4 +13,8 @@ struct AvlNode {
 
 
 bool addToAvlTree(AvlNode** root, int value);
+bool delFromAvlTree(AvlNode** root, int value);
 bool clearAvlTree(AvlNode** root);
+
+void rotateLeft(AvlNode** node);
+void rotateRight(AvlNode** node);

@@ -1,4 +1,4 @@
-#include "rotate.h"
+#include "avl_tree.h"
 
 
 void smallRotateLeft(AvlNode** node) {
@@ -57,12 +57,16 @@ void rotateLeft(AvlNode** node) {
     case -1:
         smallRotateLeft(node);
         (*node)->diff = 0;
-        (*node)->left->diff = 0;
+        if ((*node)->left != NULL) {
+            (*node)->left->diff = 0;
+        }
         break;
     case 0:
-        (*node)->diff = 1;
-        (*node)->left->diff = -1;
         smallRotateLeft(node);
+        (*node)->diff = 1;
+        if ((*node)->left != NULL) {
+            (*node)->left->diff = -1;
+        }
         break;
     case 1:
         bigRotateLeft(node);
@@ -92,12 +96,16 @@ void rotateRight(AvlNode** node) {
         case 1:
             smallRotateRight(node);
             (*node)->diff = 0;
-            (*node)->right->diff = 0;
+            if ((*node)->right != NULL) {
+                (*node)->right->diff = 0;
+            }
             break;
         case 0:
-            (*node)->diff = -1;
-            (*node)->right->diff = 1;
             smallRotateRight(node);
+            (*node)->diff = -1;
+            if ((*node)->right != NULL) {
+                (*node)->right->diff = 1;
+            }
             break;
         case -1:
             bigRotateRight(node);
