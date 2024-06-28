@@ -10,7 +10,10 @@ void FibonacciTree::printNodeValue(const int value, const std::size_t depth, boo
     if (markNode) {
         std::cout << "--> ";
     }
-    std::cout << value;
+    else {
+        std::cout << "\t";
+    }
+    std::cout << value << std::endl;
 }
 
 void FibonacciTree::display() const {
@@ -24,7 +27,6 @@ void FibonacciTree::displayRec(const std::shared_ptr<Node> &node, std::size_t de
 
     if (node->children.empty()) {
         printNodeValue(node->value, depth, markNode);
-        std::cout << std::endl;
         return;
     }
 
@@ -33,11 +35,6 @@ void FibonacciTree::displayRec(const std::shared_ptr<Node> &node, std::size_t de
     for (auto childIter = node->children.rbegin(); childIter != node->children.rend(); childIter++) {
         if (i == node->children.size() / 2ull) {
             printNodeValue(node->value, depth, markNode);
-            if (isOddSize) {
-                std::cout << "\t" << (*childIter)->value << std::endl;
-                continue;
-            }
-            std::cout << std::endl;
         }
         displayRec(*childIter, depth + 1ull);
         i++;

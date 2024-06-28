@@ -78,6 +78,9 @@ void FibonacciHeap::compress() {
                 auto &placedTreeRoot = trees[treeRoot->rank]->top();
                 if (treeRoot->value > placedTreeRoot->value) {
                     std::iter_swap(treeIter,  trees[treeRoot->rank]);
+                    if (minValueIter == trees[treeRoot->rank]) {
+                        minValueIter = treeIter;
+                    }
                 }
                 treeRoot->children.emplace_back(placedTreeRoot);
 
