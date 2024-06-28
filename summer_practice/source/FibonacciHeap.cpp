@@ -62,9 +62,9 @@ int FibonacciHeap::removeMin() {
 
 void FibonacciHeap::compress() {
     std::list<FibonacciTree> fakeList;
-    std::vector<std::list<FibonacciTree>::iterator> trees(size, fakeList.end());
+    std::vector<std::list<FibonacciTree>::iterator> trees(size + 1, fakeList.end());
 
-    for (auto treeIter = heap.begin(); treeIter != heap.end();) {
+    for (auto treeIter = heap.begin(); treeIter != heap.end(); treeIter++) {
         if (minValueIter == heap.end() || treeIter->top()->value < minValueIter->top()->value) {
             minValueIter = treeIter;
         }
@@ -72,22 +72,23 @@ void FibonacciHeap::compress() {
         auto& treeRoot = treeIter->top();
         if (trees[treeRoot->rank] == fakeList.end()) {
             trees[treeRoot->rank] = treeIter;
-            treeIter++;
         }
         else {
-            auto& placedTreeRoot = trees[treeRoot->rank]->top();
-            if (treeRoot->value < placedTreeRoot->value) {
+            while (true) {
+                auto &placedTreeRoot = trees[treeRoot->rank]->top();
+                if (treeRoot->value > placedTreeRoot->value) {
+                    std::iter_swap(treeIter,  trees[treeRoot->rank]);
+                }
                 treeRoot->children.emplace_back(placedTreeRoot);
-                heap.erase(trees[treeRoot->rank]);
-                trees[treeRoot->rank] = treeIter;
-                treeRoot->rank++;
 
-                treeIter++;
-            }
-            else {
-                placedTreeRoot->children.emplace_back(treeRoot);
-                placedTreeRoot->rank++;
-                treeIter = heap.erase(treeIter);
+                heap.erase(trees[treeRoot->rank]);
+                trees[treeRoot->rank] = fakeList.end();
+
+                treeRoot->rank++;
+                if (trees[treeRoot->rank] == fakeList.end()) {
+                    trees[treeRoot->rank] = treeIter;
+                    break;
+                }
             }
         }
     }

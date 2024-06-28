@@ -10,7 +10,8 @@ public:
 private:
     std::shared_ptr<Node> root;
 
-    void displayRec(std::shared_ptr<Node> const& node, std::size_t depth) const;
+    static void printNodeValue(int const value, std::size_t const depth, bool markNode);
+    static void displayRec(const std::shared_ptr<Node> &node, std::size_t depth, bool markNode);
 public:
     class Node {
     public:
